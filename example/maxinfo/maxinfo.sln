@@ -11,19 +11,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maxinfo", "maxinfo.vcxproj"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug_Base|Win32 = Debug_Base|Win32
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Debug_Base|Win32.ActiveCfg = Debug_Base|Win32
-		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Debug_Base|Win32.Build.0 = Debug_Base|Win32
 		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Debug|Win32.Build.0 = Debug|Win32
 		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Release|Win32.ActiveCfg = Release|Win32
 		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Release|Win32.Build.0 = Release|Win32
-		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Debug_Base|Win32.ActiveCfg = Debug_Base|Win32
-		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Debug_Base|Win32.Build.0 = Debug_Base|Win32
 		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Debug|Win32.Build.0 = Debug|Win32
 		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Release|Win32.ActiveCfg = Release|Win32

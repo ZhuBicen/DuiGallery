@@ -23,12 +23,9 @@
         },
       },
       'Debug_Base': {
+        'abstract': 1,
         'msvs_settings':{
           'VCLinkerTool': {
-            'AdditionalDependencies': [
-              'Comctl32.lib',
-              'gdi32.lib',
-            ],
             'GenerateDebugInformation': 'true',
           },
           'VCCLCompilerTool': {
