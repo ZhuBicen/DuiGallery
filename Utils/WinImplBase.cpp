@@ -186,13 +186,15 @@ LRESULT WindowImplBase::OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam,
 	lpMMI->ptMaxPosition.x	= rcWork.left;
 	lpMMI->ptMaxPosition.y	= rcWork.top;
 
-	lpMMI->ptMaxTrackSize.x =rcWork.GetWidth();
-	lpMMI->ptMaxTrackSize.y =rcWork.GetHeight();
+	lpMMI->ptMaxTrackSize.x = 800;// rcWork.GetWidth();
+	lpMMI->ptMaxTrackSize.y = 800;// rcWork.GetHeight();
+	lpMMI->ptMaxSize.x = 800;
+	lpMMI->ptMaxSize.y = 800;
 
 	lpMMI->ptMinTrackSize.x =m_PaintManager.GetMinInfo().cx;
 	lpMMI->ptMinTrackSize.y =m_PaintManager.GetMinInfo().cy;
 
-	bHandled = FALSE;
+	bHandled = TRUE;
 	return 0;
 }
 
@@ -223,6 +225,11 @@ LRESULT WindowImplBase::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bH
 		::DeleteObject(hRgn);
 	}
 #endif
+	CDuiRect rcWnd;
+	::GetWindowRect(*this, &rcWnd);
+	DUITRACE(_T("WinImplBase::OnSize(), width = %d, height = %d"), rcWnd.right - rcWnd.left, rcWnd.bottom - rcWnd.top);
+	DUITRACE(_T("WinImplBase::OnSize(): %d, width = %d, height = %d"), wParam, LOWORD(lParam), HIWORD(lParam));
+
 	bHandled = FALSE;
 	return 0;
 }
@@ -397,13 +404,16 @@ LRESULT WindowImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEHOVER:	lRes = OnMouseHover(uMsg, wParam, lParam, bHandled); break;
 	default:				bHandled = FALSE; break;
 	}
-	if (bHandled) return lRes;
-
-	lRes = HandleCustomMessage(uMsg, wParam, lParam, bHandled);
-	if (bHandled) return lRes;
-
-	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes))
+	if (bHandled) {
 		return lRes;
+	}
+	lRes = HandleCustomMessage(uMsg, wParam, lParam, bHandled);
+	if (bHandled) {
+		return lRes;
+	}
+	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes)) {
+		return lRes;
+	}
 	return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
 }
 

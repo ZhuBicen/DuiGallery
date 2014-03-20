@@ -743,12 +743,19 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
             LPMINMAXINFO lpMMI = (LPMINMAXINFO) lParam;
             if( m_szMinWindow.cx > 0 ) lpMMI->ptMinTrackSize.x = m_szMinWindow.cx;
             if( m_szMinWindow.cy > 0 ) lpMMI->ptMinTrackSize.y = m_szMinWindow.cy;
-            if( m_szMaxWindow.cx > 0 ) lpMMI->ptMaxTrackSize.x = m_szMaxWindow.cx;
-            if( m_szMaxWindow.cy > 0 ) lpMMI->ptMaxTrackSize.y = m_szMaxWindow.cy;
+			if (m_szMaxWindow.cx > 0) {
+				lpMMI->ptMaxTrackSize.x = m_szMaxWindow.cx;
+				lpMMI->ptMaxSize.x = m_szMaxWindow.cx;
+			}
+			if (m_szMaxWindow.cy > 0) {
+				lpMMI->ptMaxTrackSize.y = m_szMaxWindow.cy;
+				lpMMI->ptMaxSize.y = m_szMaxWindow.cy;
+			}
         }
         break;
     case WM_SIZE:
         {
+			DUITRACE(_T("CPaintManager::WM_SIZE(): %d, width = %d, height = %d"), wParam, LOWORD(lParam), HIWORD(lParam));
             if( m_pFocus != NULL ) {
                 TEventUI event = { 0 };
                 event.Type = UIEVENT_WINDOWSIZE;
