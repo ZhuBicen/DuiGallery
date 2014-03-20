@@ -1,0 +1,17 @@
+*.tlog
+*.log
+*.obj
+*.tlh
+*.pdb
+*.ninja
+*.ilk
+*.x86
+*.x64
+*.manifest
+out/*
+build/*
+*.exe
+*.opensdf
+*.sdf
+*.suo
+*.filters
