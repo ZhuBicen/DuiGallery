@@ -6,7 +6,7 @@ using namespace DuiLib;
 class CDuiFrameWnd : public WindowImplBase {
 public:
 	virtual LPCTSTR    GetWindowClassName() const   { return _T("DUIMainFrame"); }
-	virtual CDuiString GetSkinFile()                { return _T("duilib.xml"); }
+	virtual CDuiString GetSkinFile()                { return _T("maxinfo.xml"); }
 	virtual CDuiString GetSkinFolder()              { return _T(""); }
 };
 

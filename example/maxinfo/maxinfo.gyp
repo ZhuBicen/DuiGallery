@@ -19,6 +19,13 @@
       'sources': [
         'maxinfo.cpp',
       ],
+	  'configurations': {
+		'Common_Base': {
+		  'msvs_configuration_attributes': {
+          'OutputDirectory': '$(ProjectDir)',
+		  },
+		},
+	  }
     },
   ],
 }
