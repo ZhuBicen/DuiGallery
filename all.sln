@@ -1,6 +1,8 @@
-Microsoft Visual Studio Solution File, Format Version 13.00
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(example)", "example", "{63378BAC-9EE6-397A-D5BB-51E2D957EFEF}"
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(example)", "(example)", "{63378BAC-9EE6-397A-D5BB-51E2D957EFEF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib", "DuiLib.vcxproj", "{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}"
 EndProject
@@ -16,18 +18,25 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "maxinfo", "example\maxinfo\
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug_Base|Win32 = Debug_Base|Win32
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Debug|Win32.ActiveCfg = Debug|Win32
-		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Debug|Win32.Build.0 = Debug|Win32
-		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Release|Win32.ActiveCfg = Release|Win32
-		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Release|Win32.Build.0 = Release|Win32
+		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Debug_Base|Win32.ActiveCfg = Debug|Win32
+		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Debug_Base|Win32.Build.0 = Debug|Win32
 		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Debug|Win32.ActiveCfg = Debug|Win32
 		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Debug|Win32.Build.0 = Debug|Win32
 		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Release|Win32.ActiveCfg = Release|Win32
 		{3C37686D-0D3C-EF0D-70A2-6775AE2BEF0A}.Release|Win32.Build.0 = Release|Win32
+		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Debug_Base|Win32.ActiveCfg = Debug|Win32
+		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Debug_Base|Win32.Build.0 = Debug|Win32
+		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Debug|Win32.Build.0 = Debug|Win32
+		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Release|Win32.ActiveCfg = Release|Win32
+		{2CF3E8F1-55A0-1F6D-CADB-0F0970410F9A}.Release|Win32.Build.0 = Release|Win32
+		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Debug_Base|Win32.ActiveCfg = Debug|Win32
+		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Debug_Base|Win32.Build.0 = Debug|Win32
 		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Debug|Win32.Build.0 = Debug|Win32
 		{5DDCAD90-2AD0-2606-AA5E-A0FA0B36BA71}.Release|Win32.ActiveCfg = Release|Win32

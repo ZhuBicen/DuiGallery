@@ -13,32 +13,41 @@
         'msvs_settings':{
           'VCLinkerTool': {
             'AdditionalDependencies': [
-              'kernel32.lib',
               'gdi32.lib',
-              'winspool.lib',
-              'comdlg32.lib',
-              'advapi32.lib',
-              'shell32.lib',
-              'ole32.lib',
-              'oleaut32.lib',
-              'user32.lib',
-              'uuid.lib',
-              'odbc32.lib',
-              'odbccp32.lib',
-              'delayimp.lib',
-              'credui.lib',
-              'netapi32.lib',
               'Comctl32.lib',
             ],
+          },
+          'VCCLCompilerTool': {
+            'RuntimeLibrary': '2', # /MD(nondebug dll)
+          },
+        },
+      },
+      'Debug_Base': {
+        'msvs_settings':{
+          'VCLinkerTool': {
+            'AdditionalDependencies': [
+              'Comctl32.lib',
+              'gdi32.lib',
+            ],
             'GenerateDebugInformation': 'true',
+          },
+          'VCCLCompilerTool': {
+            'RuntimeLibrary': '3', # /MDd(debug dll)
           },
         },
       },
       'Debug': {
-        'inherit_from': ['Common_Base'],
+        'inherit_from': ['Common_Base', 'Debug_Base'],
+        'defines': [
+          '_DEBUG',
+          'DEBUG',
+        ],
       },
       'Release': {
         'inherit_from': ['Common_Base'],
+        'defines': [
+          'NDEBUG',
+        ],
       },
     }
   },
