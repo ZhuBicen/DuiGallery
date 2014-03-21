@@ -7,7 +7,7 @@
       'target_name': 'maxinfo',
       'type': 'executable',
       'include_dirs':[
-        '<(DEPTH)/'
+        '<(DEPTH)/DuiLib/'
       ],
       'dependencies': [
         '<(DEPTH)/DuiLib/DuiLib.gyp:DuiLib',

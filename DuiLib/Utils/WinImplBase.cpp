@@ -87,7 +87,6 @@ LRESULT WindowImplBase::OnDestroy(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lPa
 	return 0;
 }
 
-#if defined(WIN32) && !defined(UNDER_CE)
 LRESULT WindowImplBase::OnNcActivate(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lParam*/, BOOL& bHandled)
 {
 	if( ::IsIconic(*this) ) bHandled = FALSE;
@@ -96,6 +95,7 @@ LRESULT WindowImplBase::OnNcActivate(UINT /*uMsg*/, WPARAM wParam, LPARAM /*lPar
 
 LRESULT WindowImplBase::OnNcCalcSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
+
 	LPRECT pRect=NULL;
 
 	if ( wParam == TRUE)
@@ -109,16 +109,18 @@ LRESULT WindowImplBase::OnNcCalcSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 	}
 
 	if ( ::IsZoomed(m_hWnd))
-	{	// 最大化时，计算当前显示器最适合宽高度
-		MONITORINFO oMonitor = {};
-		oMonitor.cbSize = sizeof(oMonitor);
-		::GetMonitorInfo(::MonitorFromWindow(*this, MONITOR_DEFAULTTONEAREST), &oMonitor);
-		CDuiRect rcWork = oMonitor.rcWork;
-		CDuiRect rcMonitor = oMonitor.rcMonitor;
-		rcWork.Offset(-oMonitor.rcMonitor.left, -oMonitor.rcMonitor.top);
+	{	
+		// 最大化时，计算当前显示器最适合宽高度
+		// 以下的代码会让设置的maxinfo失效，因为它总是使用当前显示器的高度
+		//MONITORINFO oMonitor = {};
+		//oMonitor.cbSize = sizeof(oMonitor);
+		//::GetMonitorInfo(::MonitorFromWindow(*this, MONITOR_DEFAULTTONEAREST), &oMonitor);
+		//CDuiRect rcWork = oMonitor.rcWork;
+		//CDuiRect rcMonitor = oMonitor.rcMonitor;
+		//rcWork.Offset(-oMonitor.rcMonitor.left, -oMonitor.rcMonitor.top);
 
-		pRect->right = pRect->left + rcWork.GetWidth();
-		pRect->bottom = pRect->top + rcWork.GetHeight();
+		//pRect->right = pRect->left + rcWork.GetWidth();
+		//pRect->bottom = pRect->top + rcWork.GetHeight();
 		return WVR_REDRAW;
 	}
 
@@ -209,12 +211,10 @@ LRESULT WindowImplBase::OnMouseHover(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 	bHandled = FALSE;
 	return 0;
 }
-#endif
 
 LRESULT WindowImplBase::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
 	SIZE szRoundCorner = m_PaintManager.GetRoundCorner();
-#if defined(WIN32) && !defined(UNDER_CE)
 	if( !::IsIconic(*this) && (szRoundCorner.cx != 0 || szRoundCorner.cy != 0) ) {
 		CDuiRect rcWnd;
 		::GetWindowRect(*this, &rcWnd);
@@ -224,7 +224,6 @@ LRESULT WindowImplBase::OnSize(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bH
 		::SetWindowRgn(*this, hRgn, TRUE);
 		::DeleteObject(hRgn);
 	}
-#endif
 	CDuiRect rcWnd;
 	::GetWindowRect(*this, &rcWnd);
 	DUITRACE(_T("WinImplBase::OnSize(), width = %d, height = %d"), rcWnd.right - rcWnd.left, rcWnd.bottom - rcWnd.top);
@@ -248,15 +247,11 @@ LRESULT WindowImplBase::OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BO
 		SendMessage(WM_CLOSE);
 		return 0;
 	}
-#if defined(WIN32) && !defined(UNDER_CE)
 	BOOL bZoomed = ::IsZoomed(*this);
 	LRESULT lRes = CWindowWnd::HandleMessage(uMsg, wParam, lParam);
 	if( ::IsZoomed(*this) != bZoomed )
 	{
 	}
-#else
-	LRESULT lRes = CWindowWnd::HandleMessage(uMsg, wParam, lParam);
-#endif
 	return lRes;
 }
 
@@ -295,9 +290,7 @@ LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 			HGLOBAL hGlobal = ::LoadResource(m_PaintManager.GetResourceDll(), hResource);
 			if( hGlobal == NULL ) 
 			{
-#if defined(WIN32) && !defined(UNDER_CE)
 				::FreeResource(hResource);
-#endif
 				return 0L;
 			}
 			dwSize = ::SizeofResource(m_PaintManager.GetResourceDll(), hResource);
@@ -308,9 +301,7 @@ LRESULT WindowImplBase::OnCreate(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& 
 			{
 				::CopyMemory(m_lpResourceZIPBuffer, (LPBYTE)::LockResource(hGlobal), dwSize);
 			}
-#if defined(WIN32) && !defined(UNDER_CE)
 			::FreeResource(hResource);
-#endif
 			m_PaintManager.SetResourceZip(m_lpResourceZIPBuffer, dwSize);
 		}
 		break;
@@ -377,6 +368,7 @@ LRESULT WindowImplBase::OnMouseMove(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*l
 
 LRESULT WindowImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+
 	LRESULT lRes = 0;
 	BOOL bHandled = TRUE;
 	switch (uMsg)
@@ -384,16 +376,16 @@ LRESULT WindowImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:			lRes = OnCreate(uMsg, wParam, lParam, bHandled); break;
 	case WM_CLOSE:			lRes = OnClose(uMsg, wParam, lParam, bHandled); break;
 	case WM_DESTROY:		lRes = OnDestroy(uMsg, wParam, lParam, bHandled); break;
-#if defined(WIN32) && !defined(UNDER_CE)
+
 	case WM_NCACTIVATE:		lRes = OnNcActivate(uMsg, wParam, lParam, bHandled); break;
 	case WM_NCCALCSIZE:		lRes = OnNcCalcSize(uMsg, wParam, lParam, bHandled); break;
 	case WM_NCPAINT:		lRes = OnNcPaint(uMsg, wParam, lParam, bHandled); break;
 	case WM_NCHITTEST:		lRes = OnNcHitTest(uMsg, wParam, lParam, bHandled); break;
 	case WM_GETMINMAXINFO:	lRes = OnGetMinMaxInfo(uMsg, wParam, lParam, bHandled); break;
 	case WM_MOUSEWHEEL:		lRes = OnMouseWheel(uMsg, wParam, lParam, bHandled); break;
-#endif
+
 	case WM_SIZE:			lRes = OnSize(uMsg, wParam, lParam, bHandled); break;
-	case WM_CHAR:		lRes = OnChar(uMsg, wParam, lParam, bHandled); break;
+	case WM_CHAR:		    lRes = OnChar(uMsg, wParam, lParam, bHandled); break;
 	case WM_SYSCOMMAND:		lRes = OnSysCommand(uMsg, wParam, lParam, bHandled); break;
 	case WM_KEYDOWN:		lRes = OnKeyDown(uMsg, wParam, lParam, bHandled); break;
 	case WM_KILLFOCUS:		lRes = OnKillFocus(uMsg, wParam, lParam, bHandled); break;
@@ -414,6 +406,7 @@ LRESULT WindowImplBase::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 	if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes)) {
 		return lRes;
 	}
+
 	return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
 }
 

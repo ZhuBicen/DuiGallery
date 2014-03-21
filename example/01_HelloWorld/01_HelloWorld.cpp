@@ -23,16 +23,6 @@ public:
 			m_PaintManager.AttachDialog(pWnd);
 			return lRes;
 		}
-		if (uMsg == WM_GETMINMAXINFO) {
-			LPMINMAXINFO lpMMI = (LPMINMAXINFO)lParam;
-			lpMMI->ptMaxTrackSize.x = 800;// rcWork.GetWidth();
-			lpMMI->ptMaxTrackSize.y = 800;// rcWork.GetHeight();
-			lpMMI->ptMaxSize.x = 800;
-			lpMMI->ptMaxSize.y = 800;
-			OutputDebugStringA("WM_GETMINMAXINFO\n");
-			return 0;
-		}
-
 		if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes))
 		{
 			return lRes;
