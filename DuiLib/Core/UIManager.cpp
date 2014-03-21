@@ -755,7 +755,6 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
         break;
     case WM_SIZE:
         {
-			DUITRACE(_T("CPaintManager::WM_SIZE(): %d, width = %d, height = %d"), wParam, LOWORD(lParam), HIWORD(lParam));
             if( m_pFocus != NULL ) {
                 TEventUI event = { 0 };
                 event.Type = UIEVENT_WINDOWSIZE;
@@ -844,6 +843,7 @@ bool CPaintManagerUI::MessageHandler(UINT uMsg, WPARAM wParam, LPARAM lParam, LR
             TEventUI event = { 0 };
             event.ptMouse = pt;
             event.dwTimestamp = ::GetTickCount();
+            event.wParam = wParam;
             if( pNewHover != m_pEventHover && m_pEventHover != NULL ) {
                 event.Type = UIEVENT_MOUSELEAVE;
                 event.pSender = m_pEventHover;
