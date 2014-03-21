@@ -10,7 +10,7 @@
         '<(DEPTH)/'
       ],
       'dependencies': [
-        '<(DEPTH)/DuiLib.gyp:DuiLib',
+        '<(DEPTH)/DuiLib/DuiLib.gyp:DuiLib',
       ],
       'defines':[ 
         'UNICODE',

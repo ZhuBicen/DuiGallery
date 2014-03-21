@@ -7,10 +7,10 @@
       'target_name': '01_HelloWorld',
       'type': 'executable',
       'include_dirs':[
-        '<(DEPTH)/'
+        '<(DEPTH)/DuiLib'
       ],
       'dependencies': [
-        '<(DEPTH)/DuiLib.gyp:DuiLib',
+        '<(DEPTH)/DuiLib/DuiLib.gyp:DuiLib',
       ],
       'defines':[ 
         'UNICODE',

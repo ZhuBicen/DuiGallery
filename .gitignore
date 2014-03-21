@@ -15,3 +15,5 @@ build/*
 *.sdf
 *.suo
 *.filters
+*.sln
+*.vcxproj

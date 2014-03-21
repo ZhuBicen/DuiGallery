@@ -1,13 +1,13 @@
 {
   'includes': [
-    'common.gypi',
+    '../common.gypi',
   ],
   'targets': [
     {
       'target_name': 'DuiLib',
       'type': 'static_library',
       'include_dirs':[
-        '<(DEPTH)/'
+        '<(DEPTH)/DuiLib'
       ],
       'defines':[ 
         'UNICODE',
