@@ -188,11 +188,14 @@ LRESULT WindowImplBase::OnGetMinMaxInfo(UINT uMsg, WPARAM wParam, LPARAM lParam,
 	lpMMI->ptMaxPosition.x	= rcWork.left;
 	lpMMI->ptMaxPosition.y	= rcWork.top;
 
-	lpMMI->ptMaxTrackSize.x = 800;// rcWork.GetWidth();
-	lpMMI->ptMaxTrackSize.y = 800;// rcWork.GetHeight();
-	lpMMI->ptMaxSize.x = 800;
-	lpMMI->ptMaxSize.y = 800;
-
+	lpMMI->ptMaxTrackSize.x = lpMMI->ptMaxSize.x = rcWork.GetWidth();
+	lpMMI->ptMaxTrackSize.y = lpMMI->ptMaxSize.y = rcWork.GetHeight();
+	if (m_PaintManager.GetMaxInfo().cx != 0) {
+		lpMMI->ptMaxTrackSize.x = lpMMI->ptMaxSize.x = m_PaintManager.GetMaxInfo().cx;
+	}
+	if (m_PaintManager.GetMaxInfo().cy != 0) {
+		lpMMI->ptMaxTrackSize.y = lpMMI->ptMaxSize.y = m_PaintManager.GetMaxInfo().cy;
+	}
 	lpMMI->ptMinTrackSize.x =m_PaintManager.GetMinInfo().cx;
 	lpMMI->ptMinTrackSize.y =m_PaintManager.GetMinInfo().cy;
 
