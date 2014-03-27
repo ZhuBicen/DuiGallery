@@ -6,6 +6,28 @@ public:
 	virtual LPCTSTR    GetWindowClassName() const   { return _T("DUIMainFrame"); }
 	virtual CDuiString GetSkinFile()                { return _T("maxinfo.xml"); }
 	virtual CDuiString GetSkinFolder()              { return _T(""); }
+	virtual LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
+		BOOL bZoomed = ::IsZoomed(m_hWnd);
+		LRESULT lRes = CWindowWnd::HandleMessage(uMsg, wParam, lParam);
+		if (::IsZoomed(m_hWnd) != bZoomed)
+		{
+			if (!bZoomed)
+			{
+				CControlUI* pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("maxbtn")));
+				if (pControl) pControl->SetVisible(false);
+				pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("restorebtn")));
+				if (pControl) pControl->SetVisible(true);
+			}
+			else
+			{
+				CControlUI* pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("maxbtn")));
+				if (pControl) pControl->SetVisible(true);
+				pControl = static_cast<CControlUI*>(m_PaintManager.FindControl(_T("restorebtn")));
+				if (pControl) pControl->SetVisible(false);
+			}
+		}
+		return 0;
+	}
 };
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)

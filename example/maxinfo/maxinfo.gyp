@@ -18,6 +18,7 @@
       ],
       'sources': [
         'maxinfo.cpp',
+		'maxinfo.xml',
       ],
 	  'configurations': {
 		'Common_Base': {
