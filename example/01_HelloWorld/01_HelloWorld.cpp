@@ -1,8 +1,5 @@
-#define UILIB_API
-
 #include <UIlib.h>
 using namespace DuiLib;
-#pragma comment(lib, "../../Build/Debug/Lib/DuiLib.lib")
 class CDuiFrameWnd : public CWindowWnd, public INotifyUI
 {
 public:

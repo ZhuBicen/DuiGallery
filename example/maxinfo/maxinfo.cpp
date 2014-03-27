@@ -1,8 +1,6 @@
-#define UILIB_API
-
 #include <UIlib.h>
 using namespace DuiLib;
-#pragma comment(lib, "../../Build/Debug/Lib/DuiLib.lib")
+
 class CDuiFrameWnd : public WindowImplBase {
 public:
 	virtual LPCTSTR    GetWindowClassName() const   { return _T("DUIMainFrame"); }
