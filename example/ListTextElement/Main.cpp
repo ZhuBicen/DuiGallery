@@ -17,11 +17,11 @@ using namespace DuiLib;
 /*
 * 存放第二列数据
 */
-std::vector<std::string> domain;
+std::vector<std::wstring> domain;
 /*
 * 存放第三列数据
 */
-std::vector<std::string> desc;
+std::vector<std::wstring> desc;
 /*
 *  线程函数中传入的结构体变量，使用线程为了使界面线程立即返回，防止卡住，你们懂得。
 */
@@ -74,11 +74,11 @@ public:
             */
             for(int i=0; i<100; i++)
             {
-                std::stringstream ss;
-                ss << "www." << i << ".com";
+                std::wstringstream ss;
+                ss << L"www." << i << L".com";
                 domain.push_back(ss.str());
                 ss.clear();
-                ss << "it's " << i;
+                ss << L"it's " << i;
                 desc.push_back(ss.str());
                 CListTextElementUI* pListElement = new CListTextElementUI;
                 pListElement->SetTag(i);
@@ -131,7 +131,7 @@ public:
     */
     LPCTSTR GetItemText(CControlUI* pControl, int iIndex, int iSubItem)
     {
-        TCHAR szBuf[MAX_PATH] = {0};
+        wchar_t szBuf[MAX_PATH] = {0};
         switch (iSubItem)
         {
         case 0:
@@ -139,30 +139,12 @@ public:
             break;
         case 1:
             {
-#ifdef _UNICODE		
-            int iLen = domain[iIndex].length();
-            LPWSTR lpText = new WCHAR[iLen + 1];
-            ::ZeroMemory(lpText, (iLen + 1) * sizeof(WCHAR));
-            ::MultiByteToWideChar(CP_ACP, 0, domain[iIndex].c_str(), -1, (LPWSTR)lpText, iLen) ;
-            _stprintf(szBuf, lpText);
-            delete[] lpText;
-#else
             _stprintf(szBuf, domain[iIndex].c_str());
-#endif
             }
             break;
         case 2:
             {
-#ifdef _UNICODE		
-            int iLen = desc[iIndex].length();
-            LPWSTR lpText = new WCHAR[iLen + 1];
-            ::ZeroMemory(lpText, (iLen + 1) * sizeof(WCHAR));
-            ::MultiByteToWideChar(CP_ACP, 0, desc[iIndex].c_str(), -1, (LPWSTR)lpText, iLen) ;
-            _stprintf(szBuf, lpText);
-            delete[] lpText;
-#else
             _stprintf(szBuf, desc[iIndex].c_str());
-#endif
             }
             break;
         }
@@ -193,17 +175,7 @@ public:
         {
             int iIndex = msg.pSender->GetTag();
             CDuiString sMessage = _T("Click: ");;
-#ifdef _UNICODE		
-            int iLen = domain[iIndex].length();
-            LPWSTR lpText = new WCHAR[iLen + 1];
-            ::ZeroMemory(lpText, (iLen + 1) * sizeof(WCHAR));
-            ::MultiByteToWideChar(CP_ACP, 0, domain[iIndex].c_str(), -1, (LPWSTR)lpText, iLen) ;
-            sMessage += lpText;
-            delete[] lpText;
-#else
             sMessage += domain[iIndex].c_str();
-
-#endif
             ::MessageBox(NULL, sMessage.GetData(), _T("提示(by tojen)"), MB_OK);
         }
         else if(msg.sType == _T("menu")) 
@@ -247,13 +219,6 @@ public:
         Init();
         return 0;
     }
-
-    LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
-    {
-        bHandled = FALSE;
-        return 0;
-    }
-
     LRESULT OnDestroy(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         ::PostQuitMessage(0L);

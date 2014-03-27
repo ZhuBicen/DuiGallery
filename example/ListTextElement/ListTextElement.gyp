@@ -4,7 +4,7 @@
   ],
   'targets': [
     {
-      'target_name': '03_ListDemo',
+      'target_name': 'ListTextElement',
       'type': 'executable',
       'include_dirs':[
         '<(DEPTH)/DuiLib/'
