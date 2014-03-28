@@ -23,69 +23,12 @@ inline HBITMAP CreateMyBitmap(HDC hDC, int cx, int cy, COLORREF** pBits)
     return hBitmap;
 }
 
-class CShadowWnd : public CWindowWnd
-{
-private:
-    bool m_bNeedUpdate;
-    CPaintManagerUI m_pm;
 
-public:
-    CShadowWnd() { };
-    LPCTSTR GetWindowClassName() const { return _T("UIShadow"); };
-    UINT GetClassStyle() const { return UI_CLASSSTYLE_FRAME; };
-    void OnFinalMessage(HWND /*hWnd*/) { delete this; };
-
-    void RePaint() 
-    {
-        RECT rcClient = { 0 };
-        ::GetClientRect(m_hWnd, &rcClient);
-        DWORD dwWidth = rcClient.right - rcClient.left;
-        DWORD dwHeight = rcClient.bottom - rcClient.top;
-
-        HDC hDcPaint = ::GetDC(m_hWnd);
-        HDC hDcBackground = ::CreateCompatibleDC(hDcPaint);
-        COLORREF* pBackgroundBits;
-        HBITMAP hbmpBackground = CreateMyBitmap(hDcPaint, dwWidth, dwHeight, &pBackgroundBits);
-        ::ZeroMemory(pBackgroundBits, dwWidth * dwHeight * 4);
-        HBITMAP hOldBitmap = (HBITMAP) ::SelectObject(hDcBackground, hbmpBackground);
-        CRenderEngine::DrawImageString(hDcBackground, &m_pm, rcClient, rcClient, _T("file='menu_bk.png' corner='40,8,8,8'"), NULL);
-
-        RECT rcWnd = { 0 };
-        ::GetWindowRect(m_hWnd, &rcWnd);
-
-        BLENDFUNCTION bf = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
-        POINT ptPos   = { rcWnd.left, rcWnd.top };
-        SIZE sizeWnd  = { dwWidth, dwHeight };
-        POINT ptSrc   = { 0, 0 };
-        UpdateLayeredWindow(m_hWnd, hDcPaint, &ptPos, &sizeWnd, hDcBackground, &ptSrc, 0, &bf, ULW_ALPHA);
-
-        ::SelectObject(hDcBackground, hOldBitmap);
-        if( hDcBackground != NULL ) ::DeleteDC(hDcBackground);
-        if( hbmpBackground != NULL ) ::DeleteObject(hbmpBackground);
-        ::ReleaseDC(m_hWnd, hDcPaint);
-
-        m_bNeedUpdate = false;
-    }
-    
-    LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
-    {
-        if( uMsg == WM_CREATE ) SetTimer(m_hWnd, 9000, 10, NULL);
-        else if( uMsg == WM_SIZE ) m_bNeedUpdate = true;
-        else if( uMsg == WM_CLOSE ) KillTimer(m_hWnd, 9000);
-        else if( uMsg == WM_TIMER ) {
-            if( LOWORD(wParam) == 9000 && m_bNeedUpdate == true) {
-                if( !::IsIconic(m_hWnd) ) RePaint();
-            }
-        }
-
-        return CWindowWnd::HandleMessage(uMsg, wParam, lParam);
-    }
-};
 
 class CMenuWnd : public CWindowWnd, public INotifyUI
 {
 public:
-    CMenuWnd() : m_pOwner(NULL), m_pShadowWnd(NULL) { };
+    CMenuWnd() : m_pOwner(NULL){ };
 
     void Init(CControlUI* pOwner, POINT pt) {
         if( pOwner == NULL ) return;
@@ -152,16 +95,13 @@ public:
 
     HWND Create(HWND hwndParent, LPCTSTR pstrName, DWORD dwStyle, DWORD dwExStyle, int x = CW_USEDEFAULT, int y = CW_USEDEFAULT, int cx = CW_USEDEFAULT, int cy = CW_USEDEFAULT, HMENU hMenu = NULL)
     {
-        if( m_pShadowWnd == NULL ) m_pShadowWnd = new CShadowWnd;
-        m_pShadowWnd->Create(hwndParent, _T(""), WS_VISIBLE | WS_POPUP | WS_CLIPSIBLINGS, WS_EX_LAYERED | WS_EX_TOOLWINDOW, x, y, cx, cy, NULL);
-
-        dwExStyle |= WS_EX_TOOLWINDOW;
+       dwExStyle |= WS_EX_TOOLWINDOW;
         return CWindowWnd::Create(hwndParent, pstrName, dwStyle, dwExStyle, x, y, cx, cy, hMenu);
     }
 
     void ShowWindow(bool bShow = true, bool bTakeFocus = true)
     {
-        if( m_pShadowWnd != NULL ) m_pShadowWnd->ShowWindow(bShow, false);
+
         CWindowWnd::ShowWindow(bShow, bTakeFocus);
     }
 
@@ -188,7 +128,6 @@ public:
 
     LRESULT OnClose(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
-        if( m_pShadowWnd != NULL ) m_pShadowWnd->Close();
         bHandled = FALSE;
         return 0;
     }
@@ -196,11 +135,6 @@ public:
     LRESULT OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
         if( (HWND)wParam == m_hWnd ) bHandled = TRUE;
-        else if( m_pShadowWnd != NULL && (HWND)wParam == m_pShadowWnd->GetHWND() ) {
-            CWindowWnd::HandleMessage(uMsg, wParam, lParam);
-            ::SetFocus( m_hWnd );
-            bHandled = TRUE;
-        }
         else {
             Close();
             bHandled = FALSE;
@@ -224,24 +158,12 @@ public:
             ::SetWindowRgn(*this, hRgn, TRUE);
             ::DeleteObject(hRgn);
         }
-        if( m_pShadowWnd != NULL ) {
-            RECT rcWnd = { 0 };
-            ::GetWindowRect(m_hWnd, &rcWnd );
-            ::SetWindowPos(*m_pShadowWnd, m_hWnd, rcWnd.left, rcWnd.top, rcWnd.right -rcWnd.left,
-                rcWnd.bottom -rcWnd.top, SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOZORDER);
-        }
         bHandled = FALSE;
         return 0;
     }
 
     LRESULT OnMove(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
     {
-        if( m_pShadowWnd != NULL ) {
-            RECT rcWnd = { 0 };
-            ::GetWindowRect(m_hWnd, &rcWnd );
-            ::SetWindowPos(*m_pShadowWnd, m_hWnd, rcWnd.left, rcWnd.top, rcWnd.right -rcWnd.left,
-                rcWnd.bottom -rcWnd.top, SWP_NOACTIVATE | SWP_NOSIZE | SWP_NOZORDER);
-        }
         bHandled = FALSE;
         return 0;
     }
@@ -270,5 +192,5 @@ public:
     CPaintManagerUI m_pm;
     CControlUI* m_pOwner;
     POINT m_ptPos;
-    CShadowWnd* m_pShadowWnd;
+
 };
