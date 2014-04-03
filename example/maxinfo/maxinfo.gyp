@@ -18,15 +18,15 @@
       ],
       'sources': [
         'maxinfo.cpp',
-		'maxinfo.xml',
+        'maxinfo.xml',
       ],
-	  'configurations': {
-		'Common_Base': {
-		  'msvs_configuration_attributes': {
-          'OutputDirectory': '$(ProjectDir)',
-		  },
-		},
-	  }
+      'configurations': {
+        'Common_Base': {
+          'msvs_configuration_attributes': {
+            'OutputDirectory': '$(ProjectDir)',
+          },
+        },
+      }
     },
   ],
 }
