@@ -1,7 +1,6 @@
 *.tlog
 *.log
 *.obj
-*.tlh
 *.pdb
 *.ninja
 *.ilk
