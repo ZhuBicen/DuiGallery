@@ -43,7 +43,7 @@ protected:
 class CDuiFrameWnd : public WindowImplBase {
 public:
     virtual LPCTSTR    GetWindowClassName() const   { return _T("DUIMainFrame"); }
-    virtual CDuiString GetSkinFile()                { return _T("SimpleCEF.xml"); }
+    virtual CDuiString GetSkinFile()                { return _T("NativeButton.xml"); }
     virtual CDuiString GetSkinFolder()              { return _T(""); }
     virtual LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
         BOOL bZoomed = ::IsZoomed(m_hWnd);
@@ -68,7 +68,7 @@ public:
     {
         if (_tcsicmp(pstrClassName, _T("NativeButton")) == 0) {
             CNativeButtonWrapper  *pUI = new CNativeButtonWrapper;
-            HWND    hWnd = CreateWindow(_T("STATIC"), _T("This is Win32 Native Button!!!"), WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 0, 0, 0, 0, m_PaintManager.GetPaintWindow(), NULL, NULL, NULL);
+            HWND    hWnd = CreateWindow(_T("BUTTON"), _T("This is Win32 Native Button!!!"), WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 0, 0, 0, 0, m_PaintManager.GetPaintWindow(), NULL, NULL, NULL);
             pUI->Attach(hWnd);
 
             //// 上面用的是win32的按钮，下面这段用MFC的按钮
@@ -85,10 +85,10 @@ public:
 
 int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
-    CPaintManagerUI::SetInstance(hInstance);
+	CPaintManagerUI::SetInstance(hInstance);
 
-    CDuiFrameWnd duiFrame;
-    duiFrame.Create(NULL, _T("DUIWnd"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
-    duiFrame.ShowModal();
-    return 0;
+	CDuiFrameWnd duiFrame;
+	duiFrame.Create(NULL, _T("DUIWnd"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+	duiFrame.ShowModal();
+	return 0;
 }

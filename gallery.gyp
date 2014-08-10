@@ -13,6 +13,7 @@
 		'<(DEPTH)/example/02_TitleBar/02_TitleBar.gyp:*',
 		'<(DEPTH)/example/ListTextElement/ListTextElement.gyp:*',
 		'<(DEPTH)/example/SimpleCEF/SimpleCEF.gyp:*',
+		'<(DEPTH)/example/NativeButton/NativeButton.gyp:*',
       ],
     },
   ],
