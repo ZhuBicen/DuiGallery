@@ -6,7 +6,6 @@
 *.ilk
 *.x86
 *.x64
-*.manifest
 out/*
 build/*
 *.exe

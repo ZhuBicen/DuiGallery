@@ -13,11 +13,6 @@
         # Don't use clang with CEF binary releases due to Chromium tree structure dependency.
         'clang': 0,
       }],
-      ['sysroot!=""', {
-        'pkg-config': './pkg-config-wrapper "<(sysroot)" "<(target_arch)"',
-      }, {
-        'pkg-config': 'pkg-config'
-      }],
       [ 'OS=="win"', {
         'multi_threaded_dll%': 0,
       }],
@@ -470,6 +465,8 @@
       'type': 'static_library',
       'msvs_guid': 'A9D6DC71-C0DC-4549-AEA0-3B15B44E86A9',
       'defines': [
+	    'NOMINMAX',
+		'WIN32',
         'USING_CEF_SHARED',
       ],
       'include_dirs': [
