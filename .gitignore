@@ -16,3 +16,7 @@ build/*
 *.sln
 *.vcxproj
 *.lastbuildstate
+CEF/Debug/locales/*.pak
+CEF/Debug/*.pak
+*.res
+*.dat
