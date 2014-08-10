@@ -20,3 +20,4 @@ CEF/Debug/locales/*.pak
 CEF/Debug/*.pak
 *.res
 *.dat
+Debug/*
