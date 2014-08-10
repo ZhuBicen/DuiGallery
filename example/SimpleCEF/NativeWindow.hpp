@@ -1,6 +1,8 @@
-#pragma once
+#ifndef GALLERY_NATIVE_WINDOW_HPP
+#define GALLERY_NATIVE_WINDOW_HPP
 #include <UIlib.h>
 using namespace DuiLib;
+
 
 class CNativeButtonWrapper : public CControlUI
 {
@@ -13,11 +15,7 @@ public:
         ::ShowWindow(m_hWnd, bVisible);
     }
 
-    virtual void SetPos(RECT rc)
-    {
-        __super::SetPos(rc);
-        ::SetWindowPos(m_hWnd, NULL, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOACTIVATE);
-    }
+    virtual void SetPos(RECT rc);
 
     BOOL Attach(HWND hWndNew)
     {
@@ -36,6 +34,8 @@ public:
         return hWnd;
     }
 
-protected:
+private:
     HWND m_hWnd;
 };
+
+#endif

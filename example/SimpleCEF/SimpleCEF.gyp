@@ -9,7 +9,7 @@
       'type': 'executable',
       'include_dirs':[
         '<(DEPTH)/DuiLib',
-        '<(DEPTH)/CEF/include',
+        '<(DEPTH)/CEF',
       ],
       'dependencies': [
         '<(DEPTH)/DuiLib/DuiLib.gyp:DuiLib',
@@ -22,9 +22,20 @@
       ],
       'sources': [
         'NativeWindow.hpp',
+        'NativeWindow.cpp',
         'MainWindow.hpp',
         'SimpleCEF.cpp',
+        'SimpleApp.hpp',
+        'SimpleApp.cpp',
+        'SimpleHandler.hpp',
+        'SimpleHandler.cpp',
       ],
+      'msvs_settings': {
+        'VCLinkerTool': {
+          # Set /SUBSYSTEM:WINDOWS.
+          'SubSystem': '2',
+        },
+      },
       'link_settings': {
         'libraries':[
           '-lcomctl32.lib',
@@ -37,13 +48,6 @@
         # Needed to find cef_sandbox.lib using #pragma comment(lib, ...).
         '<(DEPTH)/$(ConfigurationName)',
       ],
-      'configurations': {
-        'Common_Base': {
-          'msvs_configuration_attributes': {
-            'OutputDirectory': '$(ProjectDir)',
-          },
-        },
-      },
     },
   ],
 }
