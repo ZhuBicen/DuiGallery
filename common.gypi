@@ -5,8 +5,6 @@
       'Common_Base': {
         'abstract': 1,
         'msvs_configuration_attributes': {
-          'OutputDirectory': '<(DEPTH)\\build\\$(ConfigurationName)',
-          'IntermediateDirectory': '$(OutDir)\\obj\\$(ProjectName)',
           'CharacterSet': '1',
         },
         # Add the default import libs.
@@ -15,12 +13,24 @@
             'AdditionalDependencies': [
               'gdi32.lib',
               'Comctl32.lib',
+			  'Advapi32.lib',
+			  'User32.lib',
+			  'DbgHelp.lib',
+			  'Shell32.lib',
+			  'Kernel32.lib',
+			  'Ole32.lib',
+			  'Psapi.lib',
+			  'Comdlg32.lib',
             ],
           },
           'VCCLCompilerTool': {
-            'RuntimeLibrary': '2', # /MD(nondebug dll)
+            'RuntimeLibrary': '2', # nondebug dll
           },
         },
+		'defines':[
+			'NOMINMAX',
+			'WIN32',
+		],
       },
       'Debug_Base': {
         'abstract': 1,
@@ -29,7 +39,7 @@
             'GenerateDebugInformation': 'true',
           },
           'VCCLCompilerTool': {
-            'RuntimeLibrary': '3', # /MDd(debug dll)
+            'RuntimeLibrary': '3', # debug dll
           },
         },
       },
@@ -44,6 +54,7 @@
         'inherit_from': ['Common_Base'],
         'defines': [
           'NDEBUG',
+		  
         ],
       },
     }

@@ -21,6 +21,7 @@
   'includes': [
     # Bring in the source file lists for cefclient.
     'cef_paths2.gypi',
+	'../common.gypi',
   ],
   'targets': [
     {
@@ -62,32 +63,7 @@
             'win_exe_compatibility_manifest': 'cefclient/compatibility.manifest',
           },
           'actions': [
-            {
-              'action_name': 'copy_resources',
-              'msvs_cygwin_shell': 0,
-              'inputs': [],
-              'outputs': [
-                '<(PRODUCT_DIR)/copy_resources.stamp',
-              ],
-              'action': [
-                'xcopy /efy',
-                'Resources\*',
-                '$(OutDir)',
-              ],
-            },
-            {
-              'action_name': 'copy_libraries',
-              'msvs_cygwin_shell': 0,
-              'inputs': [],
-              'outputs': [
-                '<(PRODUCT_DIR)/copy_resources.stamp',
-              ],
-              'action': [
-                'xcopy /efy',
-                '$(ConfigurationName)\*.dll',
-                '$(OutDir)',
-              ],
-            },
+ 
           ],
           'msvs_settings': {
             'VCLinkerTool': {
@@ -287,32 +263,7 @@
             'win_exe_compatibility_manifest': 'cefsimple/compatibility.manifest',
           },
           'actions': [
-            {
-              'action_name': 'copy_resources',
-              'msvs_cygwin_shell': 0,
-              'inputs': [],
-              'outputs': [
-                '<(PRODUCT_DIR)/copy_resources.stamp',
-              ],
-              'action': [
-                'xcopy /efy',
-                'Resources\*',
-                '$(OutDir)',
-              ],
-            },
-            {
-              'action_name': 'copy_libraries',
-              'msvs_cygwin_shell': 0,
-              'inputs': [],
-              'outputs': [
-                '<(PRODUCT_DIR)/copy_resources.stamp',
-              ],
-              'action': [
-                'xcopy /efy',
-                '$(ConfigurationName)\*.dll',
-                '$(OutDir)',
-              ],
-            },
+
           ],
           'msvs_settings': {
             'VCLinkerTool': {
