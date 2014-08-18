@@ -4,7 +4,7 @@ using namespace DuiLib;
 class CDuiFrameWnd : public WindowImplBase {
 public:
 	virtual LPCTSTR    GetWindowClassName() const   { return _T("DUIMainFrame"); }
-	virtual CDuiString GetSkinFile()                { return _T("maxinfo.xml"); }
+	virtual CDuiString GetSkinFile()                { return _T("04_maxinfo.xml"); }
 	virtual CDuiString GetSkinFolder()              { return _T(""); }
 	virtual LRESULT OnSysCommand(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled) {
 		BOOL bZoomed = ::IsZoomed(m_hWnd);

@@ -4,7 +4,7 @@
   ],
   'targets': [
     {
-      'target_name': 'ListTextElement',
+      'target_name': '04_maxinfo',
       'type': 'executable',
       'include_dirs':[
         '<(DEPTH)/DuiLib/'
@@ -17,14 +17,15 @@
         '_UNICODE',	
       ],
       'sources': [
-        'Main.cpp',
-        'MenuWnd.h',
+        'maxinfo.cpp',
+        '04_maxinfo.xml',
       ],
       'copies': [
         {
             'destination': '$(OutDir)',
             'files': [
-                'skin/',
+                'sysBtn/',
+                '04_maxinfo.xml',
             ],
         },
       ],

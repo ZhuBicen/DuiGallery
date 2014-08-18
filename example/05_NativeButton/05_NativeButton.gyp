@@ -4,7 +4,7 @@
   ],
   'targets': [
     {
-      'target_name': 'NativeButton',
+      'target_name': '05_NativeButton',
       'type': 'executable',
       'include_dirs':[
         '<(DEPTH)/DuiLib'
@@ -24,7 +24,7 @@
             'destination': '$(OutDir)',
             'files': [
                 'sysBtn/',
-                'NativeButton.xml',
+                '05_NativeButton.xml',
             ],
         },
       ],

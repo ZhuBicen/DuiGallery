@@ -13,11 +13,11 @@
         </HorizontalLayout>
         
         <!-- 客户区 -->
-    <VerticalLayout>
-        <Button name="btnHello" text="Hello World"/>
-		<Control />
-		<NativeButton name="nativeButton" />
-		<Control />
-    </VerticalLayout>
+        <VerticalLayout>
+            <Button name="btnHello" text="Hello World"/>
+            <Control />
+            <NativeButton name="nativeButton" />
+            <Control />
+        </VerticalLayout>
     </VerticalLayout>
 </Window>

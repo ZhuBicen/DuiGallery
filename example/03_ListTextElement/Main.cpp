@@ -253,7 +253,7 @@ private:
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPSTR /*lpCmdLine*/, int nCmdShow)
 {
     CPaintManagerUI::SetInstance(hInstance);
-    CPaintManagerUI::SetResourcePath(CPaintManagerUI::GetInstancePath() + _T("skin"));
+    CPaintManagerUI::SetResourcePath(CPaintManagerUI::GetInstancePath() + _T("03_skin"));
     ListMainForm* pFrame = new ListMainForm();
     if( pFrame == NULL ) return 0;
     pFrame->Create(NULL, _T("ListDemo"), UI_WNDSTYLE_FRAME, WS_EX_STATICEDGE | WS_EX_APPWINDOW , 0, 0, 600, 320);
