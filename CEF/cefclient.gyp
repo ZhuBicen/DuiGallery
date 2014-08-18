@@ -34,6 +34,7 @@
       ],
       'defines': [
         'USING_CEF_SHARED',
+		'NOMINMAX',
       ],
       'include_dirs': [
         '.',
@@ -66,12 +67,14 @@
 		    {
               'action_name': 'copy_resources',
               'msvs_cygwin_shell': 0,
+			  'msvs_quote_cmd':0,
               'inputs': [],
               'outputs': [
                 '<(PRODUCT_DIR)/copy_resources.stamp',
               ],
               'action': [
-                'xcopy /efy',
+                'xcopy',
+				'/efy',
                 'Resources\*',
                 '$(OutDir)',
               ],
@@ -79,12 +82,14 @@
             {
               'action_name': 'copy_libraries',
               'msvs_cygwin_shell': 0,
+			  'msvs_quote_cmd':0,
               'inputs': [],
               'outputs': [
                 '<(PRODUCT_DIR)/copy_resources.stamp',
               ],
               'action': [
-                'xcopy /efy',
+                'xcopy',
+				'/efy',
                 '$(ConfigurationName)\*.dll',
                 '$(OutDir)',
               ],
@@ -108,7 +113,7 @@
               '-lrpcrt4.lib',
               '-lopengl32.lib',
               '-lglu32.lib',
-              '-l$(ConfigurationName)/libcef.lib',
+              '-l<(DEPTH)/$(ConfigurationName)/libcef.lib',
             ],
           },
           'library_dirs': [
@@ -259,6 +264,7 @@
       ],
       'defines': [
         'USING_CEF_SHARED',
+		'NOMINMAX',
       ],
       'include_dirs': [
         '.',
@@ -291,12 +297,14 @@
 		    {
               'action_name': 'copy_resources',
               'msvs_cygwin_shell': 0,
+			  'msvs_quote_cmd':0,
               'inputs': [],
               'outputs': [
                 '<(PRODUCT_DIR)/copy_resources.stamp',
               ],
               'action': [
-                'xcopy /efy',
+                'xcopy',
+				'/efy',
                 'Resources\*',
                 '$(OutDir)',
               ],
@@ -304,12 +312,14 @@
             {
               'action_name': 'copy_libraries',
               'msvs_cygwin_shell': 0,
+			  'msvs_quote_cmd':0,
               'inputs': [],
               'outputs': [
                 '<(PRODUCT_DIR)/copy_resources.stamp',
               ],
               'action': [
-                'xcopy /efy',
+                'xcopy',
+				'/efy',
                 '$(ConfigurationName)\*.dll',
                 '$(OutDir)',
               ],
@@ -333,7 +343,7 @@
               '-lcomctl32.lib',
               '-lshlwapi.lib',
               '-lrpcrt4.lib',
-              '-l$(ConfigurationName)/libcef.lib',
+              '-l<(DEPTH)/$(ConfigurationName)/libcef.lib',
             ],
           },
           'library_dirs': [
