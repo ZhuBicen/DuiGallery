@@ -5,7 +5,7 @@
   ],
   'targets': [
     {
-      'target_name': 'SimpleCEF',
+      'target_name': '06_SimpleCEF',
       'type': 'executable',
       'include_dirs':[
         '<(DEPTH)/DuiLib',
@@ -47,6 +47,15 @@
       'library_dirs': [
         # Needed to find cef_sandbox.lib using #pragma comment(lib, ...).
         '<(DEPTH)/$(ConfigurationName)',
+      ],
+      'copies': [
+        {
+            'destination': '$(OutDir)',
+            'files': [
+                'sysBtn/',
+                '06_SimpleCEF.xml',
+            ],
+        },
       ],
     },
   ],

@@ -13,7 +13,7 @@
         '<(DEPTH)/example/03_ListTextElement/03_ListTextElement.gyp:*',
         '<(DEPTH)/example/04_maxinfo/04_maxinfo.gyp:*',
         '<(DEPTH)/example/05_NativeButton/05_NativeButton.gyp:*',
-        '<(DEPTH)/example/SimpleCEF/SimpleCEF.gyp:*',
+        '<(DEPTH)/example/06_SimpleCEF/06_SimpleCEF.gyp:*',
 
       ],
     },
