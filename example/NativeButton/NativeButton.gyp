@@ -19,13 +19,15 @@
       'sources': [
         'NativeButton.cpp',
       ],
-      'configurations': {
-        'Common_Base': {
-          'msvs_configuration_attributes': {
-            'OutputDirectory': '$(ProjectDir)',
-          },
+      'copies': [
+        {
+            'destination': '$(OutDir)',
+            'files': [
+                'sysBtn/',
+                'NativeButton.xml',
+            ],
         },
-      },
+      ],
     },
   ],
 }

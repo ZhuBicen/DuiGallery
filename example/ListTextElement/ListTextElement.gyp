@@ -18,15 +18,16 @@
       ],
       'sources': [
         'Main.cpp',
-		'MenuWnd.h',
+        'MenuWnd.h',
       ],
-	  'configurations': {
-		'Common_Base': {
-		  'msvs_configuration_attributes': {
-          'OutputDirectory': '$(ProjectDir)',
-		  },
-		},
-	  }
+      'copies': [
+        {
+            'destination': '$(OutDir)',
+            'files': [
+                'skin/',
+            ],
+        },
+      ],
     },
   ],
 }

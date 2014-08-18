@@ -18,15 +18,17 @@
       ],
       'sources': [
         '02_TitleBar.cpp',
-		'02_TitleBar.xml',
+        '02_TitleBar.xml',
       ],
-	  'configurations': {
-		'Common_Base': {
-		  'msvs_configuration_attributes': {
-          'OutputDirectory': '$(ProjectDir)',
-		  },
-		},
-	  }
+      'copies': [
+        {
+            'destination': '$(OutDir)',
+            'files': [
+                '02_TitleBar.xml',
+                'SysBtn/',
+            ],
+        },
+      ],
     },
   ],
 }

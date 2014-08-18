@@ -19,13 +19,6 @@
       'sources': [
         '01_HelloWorld.cpp',
       ],
-      'configurations': {
-        'Common_Base': {
-          'msvs_configuration_attributes': {
-            'OutputDirectory': '$(ProjectDir)',
-          },
-        },
-      },
     },
   ],
 }
