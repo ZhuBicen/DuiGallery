@@ -472,7 +472,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
         // Initialize window info to the defaults for a child window.
         info.SetAsChild(hWnd, rect);
       }
-
+      std::ostringstream oss;
+      oss << "WM_CREATE: BrowserChildHandle = " << std::hex << hWnd;
+      ::OutputDebugStringA(oss.str().c_str());
       // Creat the new child browser window
       CefBrowserHost::CreateBrowser(info, g_handler.get(),
           g_handler->GetStartupURL(), settings, NULL);
@@ -603,6 +605,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
           g_handler->GetBrowser()) {
         CefWindowHandle hwnd =
             g_handler->GetBrowser()->GetHost()->GetWindowHandle();
+        std::ostringstream oss;
+        oss << "WM_SIZE: BrowserHandle = " << std::hex << hwnd;
+        ::OutputDebugStringA(oss.str().c_str());
         if (hwnd) {
           // Resize the browser window and address bar to match the new frame
           // window size
@@ -614,10 +619,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam,
 
           HDWP hdwp = BeginDeferWindowPos(1);
           hdwp = DeferWindowPos(hdwp, editWnd, NULL, urloffset,
-            0, rect.right - urloffset, URLBAR_HEIGHT, SWP_NOZORDER);
+              0, rect.right - urloffset, URLBAR_HEIGHT, SWP_NOZORDER);
           hdwp = DeferWindowPos(hdwp, hwnd, NULL,
-            rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
-            SWP_NOZORDER);
+              rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
+              SWP_NOZORDER);
           EndDeferWindowPos(hdwp);
         }
       }

@@ -52,6 +52,10 @@ public:
 
     bool IsClosing() const { return is_closing_; }
 
+    CefRefPtr<CefBrowser> GetBrowser() const {
+        return *browser_list_.begin();
+    }
+
 private:
     // List of existing browser windows. Only accessed on the CEF UI thread.
     typedef std::list<CefRefPtr<CefBrowser> > BrowserList;

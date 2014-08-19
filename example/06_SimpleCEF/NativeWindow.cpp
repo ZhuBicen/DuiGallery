@@ -3,20 +3,37 @@
 #include <string>
 
 #undef GetNextSibling
-#include "cefsimple/simple_handler.h"
+#include "SimpleHandler.hpp"
 #include "include/cef_browser.h"
 #include "include/cef_command_line.h"
 #include "include/wrapper/cef_helpers.h"
+SimpleHandler* g_sh = nullptr;
 void CNativeButtonWrapper::SetPos(RECT rc) {
+    static bool first = true;
+    
     __super::SetPos(rc);
+    //HDWP hdwp = BeginDeferWindowPos(1);
+    //hdwp = DeferWindowPos(hdwp, m_hWnd, NULL,
+    //    rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top,
+    //    SWP_NOZORDER);
+    //EndDeferWindowPos(hdwp);
     ::SetWindowPos(m_hWnd, NULL, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOACTIVATE);
+    if (g_sh != nullptr) {
+        HWND brower_wnd = g_sh->GetBrowser()->GetHost()->GetWindowHandle();
+        ::SetWindowPos(brower_wnd, NULL, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOACTIVATE);
+
+    }
+    if (!first) {
+        return;
+    }
+    first = false;
     CefWindowInfo window_info;
 
     window_info.SetAsChild(m_hWnd, RECT{ 0, 0, rc.right - rc.left, rc.bottom - rc.top });
 
-
+    g_sh = new SimpleHandler();
     // SimpleHandler implements browser-level callbacks.
-    CefRefPtr<SimpleHandler> handler(new SimpleHandler());
+    CefRefPtr<SimpleHandler> handler(g_sh);
 
     // Specify CEF browser settings here.
     CefBrowserSettings browser_settings;
