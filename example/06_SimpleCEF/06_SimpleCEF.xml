@@ -14,7 +14,7 @@
         
         <!-- 客户区 -->
     <VerticalLayout>
-        <Button name="btnHello" text="To Demo the CEF usage."/>
+        <!-- <Button name="btnHello" text="To Demo the CEF usage."/> -->
         <NativeButton name="nativeButton" />
     </VerticalLayout>
     </VerticalLayout>

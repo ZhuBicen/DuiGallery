@@ -22,7 +22,7 @@ void CNativeButtonWrapper::SetPos(RECT rc) {
     first = false;
     CefWindowInfo window_info;
 
-    window_info.SetAsChild(parent_window_, RECT{ rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top });
+    window_info.SetAsChild(parent_window_, rc);
 
     g_sh = new SimpleHandler();
     // SimpleHandler implements browser-level callbacks.
@@ -39,7 +39,7 @@ void CNativeButtonWrapper::SetPos(RECT rc) {
         CefCommandLine::GetGlobalCommandLine();
     url = command_line->GetSwitchValue("url");
     if (url.empty())
-        url = "http://www.163.com";
+        url = "http://www.baidu.com";
 
     // Create the first browser window.
     CefBrowserHost::CreateBrowser(window_info, handler.get(), url, browser_settings, NULL);
