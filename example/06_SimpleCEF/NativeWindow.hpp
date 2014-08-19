@@ -7,35 +7,10 @@ using namespace DuiLib;
 class CNativeButtonWrapper : public CControlUI
 {
 public:
-    CNativeButtonWrapper() : m_hWnd(NULL){}
-
-    virtual void SetInternVisible(bool bVisible = true)
-    {
-        __super::SetInternVisible(bVisible);
-        ::ShowWindow(m_hWnd, bVisible);
-    }
-
+    CNativeButtonWrapper(HWND parent):parent_window_(parent) {}
     virtual void SetPos(RECT rc);
-
-    BOOL Attach(HWND hWndNew)
-    {
-        if (!::IsWindow(hWndNew)) {
-            return FALSE;
-        }
-
-        m_hWnd = hWndNew;
-        return TRUE;
-    }
-
-    HWND Detach()
-    {
-        HWND hWnd = m_hWnd;
-        m_hWnd = NULL;
-        return hWnd;
-    }
-
 private:
-    HWND m_hWnd;
+    HWND parent_window_;
 };
 
 #endif

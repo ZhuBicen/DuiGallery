@@ -30,27 +30,15 @@ public:
         }
         return 0;
     }
-    HWND GetCefHwnd() const {
-        return cef_hwnd_;
-    }
     virtual CControlUI* CreateControl(LPCTSTR pstrClassName)
     {
         if (_tcsicmp(pstrClassName, _T("NativeButton")) == 0) {
-            CNativeButtonWrapper  *pUI = new CNativeButtonWrapper;
-            HWND    hWnd = CreateWindow(_T("STATIC"), _T("This is Win32 Native Button!!!"), WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 0, 0, 0, 0, m_PaintManager.GetPaintWindow(), NULL, NULL, NULL);
-            pUI->Attach(hWnd);
-            cef_hwnd_ = hWnd;
-            //// 上面用的是win32的按钮，下面这段用MFC的按钮
-            //CButton *pBtn = new CButton;    // 记得释放内存
-            //pBtn->Create(_T("MFC"), WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, CRect(0, 0, 0, 0), CWnd::FromHandle(m_PaintManager.GetPaintWindow()), 0);
-            //pUI->Attach(*pBtn);
-
+            CNativeButtonWrapper  *pUI = new CNativeButtonWrapper(m_hWnd);
             return pUI;
         }
 
         return NULL;
     }
-    HWND cef_hwnd_;
 };
 
 #endif
