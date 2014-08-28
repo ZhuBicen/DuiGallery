@@ -44,7 +44,7 @@ bool SimpleHandler::DoClose(CefRefPtr<CefBrowser> browser) {
     CEF_REQUIRE_UI_THREAD();
 
     // Closing the main window requires special handling. See the DoClose()
-    // documentation in the CEF header for a detailed destription of this
+    // documentation in the CEF header for a detailed description of this
     // process.
     if (browser_list_.size() == 1) {
         // Set a flag to indicate that the window close should be allowed.
@@ -70,7 +70,8 @@ void SimpleHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
 
     if (browser_list_.empty()) {
         // All browser windows have closed. Quit the application message loop.
-        CefQuitMessageLoop();
+        //::PostQuitMessage(0);
+        // CefQuitMessageLoop();
     }
 }
 

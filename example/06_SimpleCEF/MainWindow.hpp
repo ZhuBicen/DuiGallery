@@ -1,11 +1,14 @@
 #ifndef GALLERY_MAINWINDOW_HPP
 #define GALLERY_MAINWINDOW_HPP
 #pragma once
+#undef GetNextSibling
+#include <sstream>
 #include <UIlib.h>
+#include "SimpleHandler.hpp"
 using namespace DuiLib;
 
 #include "NativeWindow.hpp"
-
+extern SimpleHandler* g_sh;
 class CDuiFrameWnd : public WindowImplBase {
 public:
     virtual LPCTSTR    GetWindowClassName() const   { return _T("DUIMainFrame"); }
@@ -38,6 +41,25 @@ public:
         }
 
         return NULL;
+    }
+    LRESULT OnClose(UINT /*uMsg*/, WPARAM /*wParam*/, LPARAM /*lParam*/, BOOL& bHandled)
+    {
+        std::ostringstream oss;
+
+        
+        if (!g_sh->IsClosing()) {
+            bHandled = true;
+            oss << __FUNCTION__ << " trying to close all browsers.\n" ;
+            OutputDebugStringA(oss.str().c_str());
+            g_sh->CloseAllBrowsers(false);
+            return 0;
+        }
+        bHandled = false;
+        oss << __FUNCTION__ << " permit to close.\n";
+        OutputDebugStringA(oss.str().c_str());
+        ::PostQuitMessage(0);
+        // ::DestroyWindow(m_hWnd);
+        return 1;
     }
 };
 

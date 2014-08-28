@@ -67,8 +67,9 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
     CPaintManagerUI::MessageLoop();
     CPaintManagerUI::Term();
 
+    // TODO: Cef can't be shutdown successfully.
     // Shut down CEF.
-    CefShutdown();
+    // CefShutdown();
 
     return 0;
 }
