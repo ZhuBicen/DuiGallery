@@ -1,4 +1,6 @@
 #include "CefDialog.hpp"
+#include "CefBrowserWrapper.hpp"
+
 LRESULT CefDialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     LRESULT lRes = 0;
@@ -13,6 +15,10 @@ LRESULT CefDialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
             button->SetBkColor(0xFFFF0000);
             button->SetFixedHeight(40);
             layout->Add(button);
+        }
+        {
+            auto browser = new CefBrowserWrapper(m_hWnd);
+            layout->Add(browser);
         }
         m_PaintManager.Init(m_hWnd);
         m_PaintManager.AttachDialog(layout);

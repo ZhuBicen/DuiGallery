@@ -28,6 +28,8 @@
         'CefAppImpl.cpp',
         'CefClientImpl.hpp',
         'CefClientImpl.cpp',
+        'CefBrowserWrapper.hpp',
+        'CefBrowserWrapper.cpp',
       ],
       'msvs_settings': {
         'VCLinkerTool': {
