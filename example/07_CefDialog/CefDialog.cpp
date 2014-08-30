@@ -56,6 +56,10 @@ void CefDialog::Notify(TNotifyUI& msg) {
     if (msg.sType == L"click") {
         if (msg.pSender->GetName() == L"sendmessage")
         {
+            if (g_sh->GetBrowser(m_hWnd)->IsLoading()) {
+                ::MessageBeep(MB_OK);
+                return;
+            }
 
             std::wstring js = 
                 L"var msgs = document.getElementById(\"messages\");"
