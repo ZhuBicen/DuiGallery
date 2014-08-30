@@ -13,9 +13,10 @@ public:
     CefAppImpl();
 
     // CefApp methods:
-    virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler()
-        OVERRIDE{ return this; }
-
+    virtual CefRefPtr<CefBrowserProcessHandler> GetBrowserProcessHandler() OVERRIDE{
+        return this;
+    }
+    virtual void OnRegisterCustomSchemes(CefRefPtr<CefSchemeRegistrar> registrar);
     // CefBrowserProcessHandler methods:
     virtual void OnContextInitialized() OVERRIDE;
 

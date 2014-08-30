@@ -36,7 +36,7 @@ void CefBrowserWrapper::SetPos(RECT rc) {
         CefCommandLine::GetGlobalCommandLine();
     url = command_line->GetSwitchValue("url");
     if (url.empty())
-        url = "http://www.xxxxxxxxxxxx.com";
+        url = "lightyear://messageHistory/handler.html";
 
     // Create the first browser window.
     CefBrowserHost::CreateBrowser(window_info, handler.get(), url, browser_settings, NULL);

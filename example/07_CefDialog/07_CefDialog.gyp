@@ -30,6 +30,8 @@
         'CefClientImpl.cpp',
         'CefBrowserWrapper.hpp',
         'CefBrowserWrapper.cpp',
+        'MessageHistorySchemeHandler.hpp',
+        'MessageHistorySchemeHandler.cpp',
       ],
       'msvs_settings': {
         'VCLinkerTool': {

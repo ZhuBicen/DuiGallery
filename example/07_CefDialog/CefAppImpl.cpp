@@ -3,10 +3,16 @@
 // can be found in the LICENSE file.
 
 #include "CefAppImpl.hpp"
-
+#include "MessageHistorySchemeHandler.hpp"
 #include <string>
 
 CefAppImpl::CefAppImpl() {
 }
 void CefAppImpl::OnContextInitialized() {
+    CefRegisterSchemeHandlerFactory("lightyear", "messagehistory", new MessageHistorySchemeHandlerFactory());
+}
+
+void CefAppImpl::OnRegisterCustomSchemes(
+    CefRefPtr<CefSchemeRegistrar> registrar) {
+    registrar->AddCustomScheme("lightyear", true, false, false);
 }
