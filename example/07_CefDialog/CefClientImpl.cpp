@@ -29,6 +29,10 @@ CefClientImpl* CefClientImpl::GetInstance() {
 
 void CefClientImpl::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
     browsers_[::GetParent(browser->GetHost()->GetWindowHandle())] = browser;
+    std::stringstream ss;
+    ss << "<html><body bgcolor=\"white\"><h1>Chatting with xxx</h1>Text:<pre>" << "XXXYY" <<
+        "</pre></body></html>";
+    browser->GetMainFrame()->LoadString(ss.str(), "http://tests/gettext");
 }
 
 bool CefClientImpl::DoClose(CefRefPtr<CefBrowser> browser) {

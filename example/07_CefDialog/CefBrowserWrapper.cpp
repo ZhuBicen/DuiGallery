@@ -36,7 +36,7 @@ void CefBrowserWrapper::SetPos(RECT rc) {
         CefCommandLine::GetGlobalCommandLine();
     url = command_line->GetSwitchValue("url");
     if (url.empty())
-        url = "http://www.baidu.com";
+        url = "http://www.xxxxxxxxxxxx.com";
 
     // Create the first browser window.
     CefBrowserHost::CreateBrowser(window_info, handler.get(), url, browser_settings, NULL);
