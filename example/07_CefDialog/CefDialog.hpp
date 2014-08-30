@@ -9,6 +9,7 @@ public:
     virtual void    Notify(TNotifyUI& msg);
     virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
 private:
+    CRichEditUI* m_edit;
     CPaintManagerUI m_PaintManager;
 };
 

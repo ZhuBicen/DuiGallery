@@ -28,7 +28,7 @@ public:
         OutputDebugStringA((url+"\n").c_str());
         if (strstr(url.c_str(), "handler.html") != NULL) {
             // Build the response html
-            data_ = "<html><head><title>Client Scheme Handler</title></head>"
+            data_ = "<html><head><title>Message History</title></head>"
                 "<body bgcolor=\"white\">"
                 "This contents of this page page are served by the "
                 "ClientSchemeHandler class handling the client:// protocol."
@@ -40,12 +40,11 @@ public:
             //DumpRequestContents(request, dump);
             data_.append(dump);
 
-            data_.append("</pre><br/>Try the test form:"
-                "<form method=\"POST\" action=\"handler.html\">"
-                "<input type=\"text\" name=\"field1\">"
-                "<input type=\"text\" name=\"field2\">"
-                "<input type=\"submit\">"
-                "</form></body></html>");
+            data_.append("<ul id=\"messages\">"
+                "<li>Coffee</li>"
+                "<li>Milk</li>"
+                "</ul>"
+                "</body></html>");
 
             handled = true;
 
