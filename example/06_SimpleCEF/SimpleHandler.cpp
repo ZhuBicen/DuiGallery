@@ -17,9 +17,9 @@ namespace {
     SimpleHandler* g_instance = NULL;
 
 }  // namespace
-
+int SimpleHandler::browser_count_ = 0;
 SimpleHandler::SimpleHandler()
-: is_closing_(false) {
+: is_closing_(false), browser_id_(0) {
     DCHECK(!g_instance);
     g_instance = this;
 }
@@ -34,19 +34,32 @@ SimpleHandler* SimpleHandler::GetInstance() {
 }
 
 void SimpleHandler::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
-    CEF_REQUIRE_UI_THREAD();
+    if (!GetBrowser()) {
+        base::AutoLock lock_scope(lock_);
+        // We need to keep the main child window, but not popup windows
+        browser_ = browser;
+        browser_id_ = browser->GetIdentifier();
+    }
+    else if (browser->IsPopup()) {
+        // Add to the list of popup browsers.
+        popup_browsers_.push_back(browser);
 
-    // Add to the list of existing browsers.
-    browser_list_.push_back(browser);
+        // Give focus to the popup browser. Perform asynchronously because the
+        // parent window may attempt to keep focus after launching the popup.
+        CefPostTask(TID_UI,
+            base::Bind(&CefBrowserHost::SetFocus, browser->GetHost().get(), true));
+    }
+    browser_count_++;
 }
 
 bool SimpleHandler::DoClose(CefRefPtr<CefBrowser> browser) {
     CEF_REQUIRE_UI_THREAD();
 
     // Closing the main window requires special handling. See the DoClose()
-    // documentation in the CEF header for a detailed description of this
+    // documentation in the CEF header for a detailed destription of this
     // process.
-    if (browser_list_.size() == 1) {
+    if (GetBrowserId() == browser->GetIdentifier()) {
+        base::AutoLock lock_scope(lock_);
         // Set a flag to indicate that the window close should be allowed.
         is_closing_ = true;
     }
@@ -59,19 +72,28 @@ bool SimpleHandler::DoClose(CefRefPtr<CefBrowser> browser) {
 void SimpleHandler::OnBeforeClose(CefRefPtr<CefBrowser> browser) {
     CEF_REQUIRE_UI_THREAD();
 
-    // Remove from the list of existing browsers.
-    BrowserList::iterator bit = browser_list_.begin();
-    for (; bit != browser_list_.end(); ++bit) {
-        if ((*bit)->IsSame(browser)) {
-            browser_list_.erase(bit);
-            break;
+    if (GetBrowserId() == browser->GetIdentifier()) {
+        {
+            base::AutoLock lock_scope(lock_);
+            // Free the browser pointer so that the browser can be destroyed
+            browser_ = NULL;
+        }
+    }
+    else if (browser->IsPopup()) {
+        // Remove from the browser popup list.
+        BrowserList::iterator bit = popup_browsers_.begin();
+        for (; bit != popup_browsers_.end(); ++bit) {
+            if ((*bit)->IsSame(browser)) {
+                popup_browsers_.erase(bit);
+                break;
+            }
         }
     }
 
-    if (browser_list_.empty()) {
-        // All browser windows have closed. Quit the application message loop.
-        //::PostQuitMessage(0);
-        // CefQuitMessageLoop();
+    if (--browser_count_ == 0) {
+        // Quit the application message loop.
+        CefQuitMessageLoop();
+        //PostQuitMessage(1);
     }
 }
 
@@ -95,21 +117,6 @@ void SimpleHandler::OnLoadError(CefRefPtr<CefBrowser> browser,
     frame->LoadString(ss.str(), failedUrl);
 }
 
-void SimpleHandler::CloseAllBrowsers(bool force_close) {
-    if (!CefCurrentlyOn(TID_UI)) {
-        // Execute on the UI thread.
-        CefPostTask(TID_UI,
-            base::Bind(&SimpleHandler::CloseAllBrowsers, this, force_close));
-        return;
-    }
-
-    if (browser_list_.empty())
-        return;
-
-    BrowserList::const_iterator it = browser_list_.begin();
-    for (; it != browser_list_.end(); ++it)
-        (*it)->GetHost()->CloseBrowser(force_close);
-}
 void SimpleHandler::OnTitleChange(CefRefPtr<CefBrowser> browser,
     const CefString& title) {
     CEF_REQUIRE_UI_THREAD();

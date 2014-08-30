@@ -48,7 +48,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
     settings.no_sandbox = true;
 #endif
 
-    settings.multi_threaded_message_loop = true;
+    settings.multi_threaded_message_loop = false;
     // Initialize CEF.
     CefInitialize(main_args, settings, app.get(), sandbox_info);
 
@@ -62,14 +62,14 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmd
     // Run the CEF message loop. This will block until CefQuitMessageLoop() is
     // called.
 
-    // CefRunMessageLoop();
+    CefRunMessageLoop();
 
-    CPaintManagerUI::MessageLoop();
+    // CPaintManagerUI::MessageLoop();
     CPaintManagerUI::Term();
 
     // TODO: Cef can't be shutdown successfully.
     // Shut down CEF.
-    // CefShutdown();
+    CefShutdown();
 
     return 0;
 }

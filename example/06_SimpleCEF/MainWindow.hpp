@@ -49,15 +49,22 @@ public:
         
         if (!g_sh->IsClosing()) {
             bHandled = true;
-            oss << __FUNCTION__ << " trying to close all browsers.\n" ;
-            OutputDebugStringA(oss.str().c_str());
-            g_sh->CloseAllBrowsers(false);
-            return 0;
+            CefRefPtr<CefBrowser> browser = g_sh->GetBrowser();
+            if (browser.get()) {
+                // Notify the browser window that we would like to close it. This
+                // will result in a call to ClientHandler::DoClose() if the
+                // JavaScript 'onbeforeunload' event handler allows it.
+                browser->GetHost()->CloseBrowser(false);
+
+                oss << __FUNCTION__ << " trying to close all browsers.\n";
+                OutputDebugStringA(oss.str().c_str());
+                return 0;
+            }
         }
         bHandled = false;
         oss << __FUNCTION__ << " permit to close.\n";
         OutputDebugStringA(oss.str().c_str());
-        ::PostQuitMessage(0);
+        // ::PostQuitMessage(0);
         // ::DestroyWindow(m_hWnd);
         return 1;
     }

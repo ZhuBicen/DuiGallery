@@ -4,7 +4,7 @@
 
 #ifndef CEF_TESTS_CEFSIMPLE_SIMPLE_HANDLER_H_
 #define CEF_TESTS_CEFSIMPLE_SIMPLE_HANDLER_H_
-
+#include "include/base/cef_lock.h"
 #include "include/cef_client.h"
 
 #include <list>
@@ -47,22 +47,32 @@ public:
         const CefString& errorText,
         const CefString& failedUrl) OVERRIDE;
 
-    // Request that all existing browser windows close.
-    void CloseAllBrowsers(bool force_close);
-
+    int GetBrowserId() const {
+        base::AutoLock lock_scope(lock_);
+        return browser_id_;
+    }
     bool IsClosing() const { return is_closing_; }
 
     CefRefPtr<CefBrowser> GetBrowser() const {
-        return *browser_list_.begin();
+        return browser_;
     }
 
 private:
+    // Number of currently existing browser windows. The application will exit
+    // when the number of windows reaches 0.
+    static int browser_count_;
+
     // List of existing browser windows. Only accessed on the CEF UI thread.
     typedef std::list<CefRefPtr<CefBrowser> > BrowserList;
-    BrowserList browser_list_;
+    BrowserList popup_browsers_;
+
 
     bool is_closing_;
+    CefRefPtr<CefBrowser> browser_;
+    int browser_id_;
 
+
+    mutable base::Lock lock_;
     // Include the default reference counting implementation.
     IMPLEMENT_REFCOUNTING(SimpleHandler);
 };
