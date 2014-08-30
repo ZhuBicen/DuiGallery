@@ -7,17 +7,14 @@
 #include "include/wrapper/cef_helpers.h"
 CefClientImpl* g_sh = nullptr;
 void CefBrowserWrapper::SetPos(RECT rc) {
-    static bool first = true;
 
     __super::SetPos(rc);
-    if (g_sh != nullptr) {
-        HWND brower_wnd = g_sh->GetBrowser()->GetHost()->GetWindowHandle();
+    if (browser_ != nullptr) {
+        HWND brower_wnd = browser_->GetHost()->GetWindowHandle();
         ::SetWindowPos(brower_wnd, NULL, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOACTIVATE);
-    }
-    if (!first) {
         return;
     }
-    first = false;
+
     CefWindowInfo window_info;
 
     window_info.SetAsChild(parent_window_, rc);
@@ -40,6 +37,6 @@ void CefBrowserWrapper::SetPos(RECT rc) {
         url = "http://www.baidu.com";
 
     // Create the first browser window.
-    CefBrowserHost::CreateBrowser(window_info, handler.get(), url, browser_settings, NULL);
+    browser_ = CefBrowserHost::CreateBrowserSync(window_info, handler.get(), url, browser_settings, NULL);
 
 }

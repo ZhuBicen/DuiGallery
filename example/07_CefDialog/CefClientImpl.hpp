@@ -8,7 +8,7 @@
 #include "include/cef_client.h"
 
 #include <list>
-
+#include <map>
 class CefClientImpl : public CefClient,
     public CefDisplayHandler,
     public CefLifeSpanHandler,
@@ -47,30 +47,20 @@ public:
         const CefString& errorText,
         const CefString& failedUrl) OVERRIDE;
 
-    int GetBrowserId() const {
-        base::AutoLock lock_scope(lock_);
-        return browser_id_;
-    }
     bool IsClosing() const { return is_closing_; }
 
-    CefRefPtr<CefBrowser> GetBrowser() const {
-        return browser_;
+    CefRefPtr<CefBrowser> GetBrowser(HWND hwnd) {
+        if (browsers_.find(hwnd) != browsers_.end()) {
+            return browsers_[hwnd];
+        }
+        return NULL;
     }
 
 private:
-    // Number of currently existing browser windows. The application will exit
-    // when the number of windows reaches 0.
-    static int browser_count_;
-
     // List of existing browser windows. Only accessed on the CEF UI thread.
-    typedef std::list<CefRefPtr<CefBrowser> > BrowserList;
-    BrowserList popup_browsers_;
-
-
+    typedef std::map<HWND, CefRefPtr<CefBrowser> > BrowserMap;
+    BrowserMap browsers_;
     bool is_closing_;
-    CefRefPtr<CefBrowser> browser_;
-    int browser_id_;
-
 
     mutable base::Lock lock_;
     // Include the default reference counting implementation.

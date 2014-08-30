@@ -9,7 +9,7 @@ LRESULT CefDialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         CVerticalLayoutUI* layout = new CVerticalLayoutUI;
         layout->SetBkColor(0xFFFFFFFF);
         layout->SetChildPadding(10);
-        layout->SetInset(RECT{ 10, 10, 10, 10 });
+        layout->SetInset(RECT{ 2, 2, 2, 2 });
         {
             auto button = new CButtonUI;
             button->SetBkColor(0xFFFF0000);
@@ -19,6 +19,11 @@ LRESULT CefDialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         {
             auto browser = new CefBrowserWrapper(m_hWnd);
             layout->Add(browser);
+        }
+        {
+            auto edit = new CRichEditUI;
+            edit->SetMinHeight(50);
+            layout->Add(edit);
         }
         m_PaintManager.Init(m_hWnd);
         m_PaintManager.AttachDialog(layout);
