@@ -30,7 +30,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
     settings.no_sandbox = true;
 #endif
 
-    settings.multi_threaded_message_loop = false;
+    settings.multi_threaded_message_loop = true;
     // Initialize CEF.
     CefInitialize(main_args, settings, app.get(), NULL);
 
@@ -41,11 +41,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCm
     d.Create(NULL, _T("CefDialog"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE, 0, 0, 500, 800);
     d.ShowWindow();
 
-    CefRunMessageLoop();
-    // CPaintManagerUI::MessageLoop();
+    // CefRunMessageLoop();
+    CPaintManagerUI::MessageLoop();
     CPaintManagerUI::Term();
 
     // TODO: Cef can't be shutdown successfully.
-    CefShutdown();
+    // CefShutdown();
     return 0;
 }

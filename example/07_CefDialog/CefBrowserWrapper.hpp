@@ -14,7 +14,6 @@ public:
     virtual void SetPos(RECT rc);
 private:
     HWND parent_window_;
-    CefRefPtr<CefBrowser> browser_;
 };
 
 #endif

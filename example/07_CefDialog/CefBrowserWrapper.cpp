@@ -9,8 +9,11 @@ CefClientImpl* g_sh = nullptr;
 void CefBrowserWrapper::SetPos(RECT rc) {
 
     __super::SetPos(rc);
-    if (browser_ != nullptr) {
-        HWND brower_wnd = browser_->GetHost()->GetWindowHandle();
+    if (g_sh == nullptr) {
+        g_sh = new CefClientImpl;
+    }
+    if (g_sh->GetBrowser(parent_window_) != nullptr) {
+        HWND brower_wnd = g_sh->GetBrowser(parent_window_)->GetHost()->GetWindowHandle();
         ::SetWindowPos(brower_wnd, NULL, rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top, SWP_NOZORDER | SWP_NOACTIVATE);
         return;
     }
@@ -19,7 +22,6 @@ void CefBrowserWrapper::SetPos(RECT rc) {
 
     window_info.SetAsChild(parent_window_, rc);
 
-    g_sh = new CefClientImpl();
     // SimpleHandler implements browser-level callbacks.
     CefRefPtr<CefClientImpl> handler(g_sh);
 
@@ -37,6 +39,6 @@ void CefBrowserWrapper::SetPos(RECT rc) {
         url = "http://www.baidu.com";
 
     // Create the first browser window.
-    browser_ = CefBrowserHost::CreateBrowserSync(window_info, handler.get(), url, browser_settings, NULL);
+    CefBrowserHost::CreateBrowser(window_info, handler.get(), url, browser_settings, NULL);
 
 }

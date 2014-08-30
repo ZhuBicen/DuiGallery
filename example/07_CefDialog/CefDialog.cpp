@@ -1,6 +1,8 @@
 #include "CefDialog.hpp"
 #include "CefBrowserWrapper.hpp"
+#include "CefClientImpl.hpp"
 
+extern CefClientImpl* g_sh;
 LRESULT CefDialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     LRESULT lRes = 0;
@@ -23,12 +25,21 @@ LRESULT CefDialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         {
             auto edit = new CRichEditUI;
             edit->SetMinHeight(50);
+            edit->SetBorderColor(0xFF112233);
+            edit->SetBorderSize(3);
             layout->Add(edit);
         }
         m_PaintManager.Init(m_hWnd);
         m_PaintManager.AttachDialog(layout);
         // m_PaintManager.SetShowUpdateRect(true);
         return lRes;
+    }
+    if (uMsg == WM_CLOSE) {
+        if (!g_sh->IsClosing()) {
+            g_sh->GetBrowser(m_hWnd)->GetHost()->CloseBrowser(true);
+            return 0;
+        }
+        ::PostQuitMessage(0);
     }
     if (m_PaintManager.MessageHandler(uMsg, wParam, lParam, lRes)) {
         return lRes;

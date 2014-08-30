@@ -28,10 +28,12 @@ CefClientImpl* CefClientImpl::GetInstance() {
 }
 
 void CefClientImpl::OnAfterCreated(CefRefPtr<CefBrowser> browser) {
+    browsers_[::GetParent(browser->GetHost()->GetWindowHandle())] = browser;
 }
 
 bool CefClientImpl::DoClose(CefRefPtr<CefBrowser> browser) {
     CEF_REQUIRE_UI_THREAD();
+    is_closing_ = true;
     return false;
 }
 
