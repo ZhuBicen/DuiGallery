@@ -12,8 +12,12 @@ LRESULT CefDialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
         layout->SetBkColor(0xFFFFFFFF);
         layout->SetChildPadding(10);
         layout->SetInset(RECT{ 2, 2, 2, 2 });
+        layout->SetSepHeight(30);
+        layout->SetSepImmMode(true);
         {
             auto browser = new CefBrowserWrapper(m_hWnd);
+            browser->SetBorderColor(0xFF112233);
+            browser->SetBorderSize(3);
             layout->Add(browser);
         }
         {
