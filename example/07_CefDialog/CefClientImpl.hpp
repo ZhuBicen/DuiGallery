@@ -6,6 +6,8 @@
 #define GALLERY_08_CEFCLIENTIMPL_HPP
 #include "include/base/cef_lock.h"
 #include "include/cef_client.h"
+#include "include/wrapper/cef_helpers.h"
+#include "include/wrapper/cef_message_router.h"
 
 #include <list>
 #include <map>
@@ -57,6 +59,8 @@ public:
     }
 
 private:
+
+    CefRefPtr<CefMessageRouterBrowserSide> message_router_;
     // List of existing browser windows. Only accessed on the CEF UI thread.
     typedef std::map<HWND, CefRefPtr<CefBrowser> > BrowserMap;
     BrowserMap browsers_;
